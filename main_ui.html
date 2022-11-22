@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Images viewer</title>
+    <style>
+        * {
+            color: white;
+            font-family: sans-serif;
+        }
+        img {
+            width: 250px;
+        }
+        body {
+            background-color: #15171E;
+        }
+        p {
+            color: white;
+        }
+
+        .imgWrapper {   
+            height: auto;
+            display: inline-block;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+        }
+
+.checkbox {
+  margin: 15px;
+  display: inline-block;
+}
+
+ul {
+  list-style-type: none;
+}
+
+label {
+  font-family: Helvetica;
+  letter-spacing: 1px;
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+.checkbox-flip, .checkbox-pop, .checkbox-pull, .checkbox-spin {
+  display: none;
+}
+.checkbox-pop + label span{
+  display: inline-block;
+  width: 25px;
+  height: 19px;
+  margin: 0 5px -4px 0;
+  /*layout relationship between check and label*/
+}
+.checkbox-flip + label span:before, .checkbox-flip + label span:after,
+.checkbox-pop + label span:before,
+.checkbox-pop + label span:after,
+.checkbox-pull + label span:before,
+.checkbox-pull + label span:after,
+.checkbox-spin + label span:before,
+.checkbox-spin + label span:after {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: 2px solid #FF4040;
+}
+.checkbox-flip + label span:after,
+.checkbox-pop + label span:after,
+.checkbox-pull + label span:after,
+.checkbox-spin + label span:after {
+  z-index: 0;
+  border: none;
+}
+
+.checkbox-flip:checked + label span:before {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  background: #FF4040;
+}
+
+.checkbox-pop:checked + label span:before {
+  animation: pop 0.3s ease;
+  z-index: 100;
+  background: #FF4040;
+}
+
+.checkbox-pull:checked + label span:after {
+  width: 1.2rem;
+  height: 1.2rem;
+  background: #FF4040;
+  animation: pull 0.4s linear;
+}
+
+.checkbox-spin:checked + label span:before {
+  -webkit-transform: rotateZ(180deg);
+  -moz-transform: rotateZ(180deg);
+  -ms-transform: rotateZ(180deg);
+  -o-transform: rotateZ(180deg);
+  transform: rotateZ(180deg);
+  background: #FF4040;
+}
+    </style>
+</head>
+<body>
+    <ul>
+    {{ with .FilesPath }}
+			{{ range . }}
+            <li class="checkbox">
+                <input class="checkbox-pop" type="checkbox" id="{{ .P }}"/>
+                <label for="{{ .P }}"><span></span>{{ .P }}</label>
+                <img src="http://localhost:3333/static/{{ .P }}"/>
+              </li>
+			{{ end }} 
+      	{{ end }}
+    </ul>
+</body>
+</html>
